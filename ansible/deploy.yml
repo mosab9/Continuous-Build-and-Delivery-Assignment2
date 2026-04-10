@@ -1,0 +1,44 @@
+---
+- name: Deploy Order Service locally
+  hosts: local
+  become: false
+  vars_files:
+    - vars/main.yml
+
+  tasks:
+    - name: Stop existing container (if running)
+      community.docker.docker_container:
+        name: "{{ app_name }}"
+        state: stopped
+      ignore_errors: true
+
+    - name: Remove existing container
+      community.docker.docker_container:
+        name: "{{ app_name }}"
+        state: absent
+      ignore_errors: true
+
+    - name: Start new container
+      community.docker.docker_container:
+        name: "{{ app_name }}"
+        image: "{{ app_image }}"
+        state: started
+        restart_policy: unless-stopped
+        ports:
+          - "{{ app_port }}:{{ container_port }}"
+        env:
+          SPRING_PROFILES_ACTIVE: "{{ app_env }}"
+
+    - name: Wait for Order Service to be healthy
+      uri:
+        url: "http://localhost:{{ app_port }}/actuator/health"
+        method: GET
+        status_code: 200
+      register: health_check
+      retries: "{{ health_check_retries }}"
+      delay: "{{ health_check_delay }}"
+      until: health_check.status == 200
+
+    - name: Confirm deployment
+      debug:
+        msg: "Order Service deployed successfully at http://localhost:{{ app_port }}"
