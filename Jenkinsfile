@@ -11,7 +11,12 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout([
+                    $class: 'GitSCM',
+                    branches: scm.branches,
+                    userRemoteConfigs: scm.userRemoteConfigs,
+                    extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'order-service']]
+                ])
             }
         }
 
