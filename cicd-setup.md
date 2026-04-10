@@ -235,7 +235,7 @@ This makes Jenkins automatically run the pipeline every time you push code to Gi
 ipconfig getifaddr en0
 ```
 
-Example output: `192.168.1.45`
+Example output @: `192.168.1.45`
 
 ### Add the webhook in GitHub
 
