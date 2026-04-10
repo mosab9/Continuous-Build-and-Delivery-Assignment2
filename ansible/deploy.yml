@@ -6,13 +6,7 @@
     - vars/main.yml
 
   tasks:
-    - name: Stop existing container (if running)
-      community.docker.docker_container:
-        name: "{{ app_name }}"
-        state: stopped
-      ignore_errors: true
-
-    - name: Remove existing container
+    - name: Remove existing container (stop + remove)
       community.docker.docker_container:
         name: "{{ app_name }}"
         state: absent

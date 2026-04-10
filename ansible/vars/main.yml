@@ -3,5 +3,5 @@ app_image: order-service:latest
 app_port: 8081
 container_port: 8081
 app_env: production
-health_check_retries: 10
-health_check_delay: 5
+health_check_retries: 20
+health_check_delay: 10
