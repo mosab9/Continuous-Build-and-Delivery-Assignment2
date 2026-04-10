@@ -1,4 +1,7 @@
-target/
+# Ignore everything inside target EXCEPT the JAR
+target/*
+!target/*.jar
+
 .git
 .gitignore
 .idea
@@ -10,4 +13,3 @@ node_modules/
 .mvn
 mvnw
 mvnw.cmd
-
