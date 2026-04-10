@@ -25,7 +25,7 @@
 
     - name: Wait for Order Service to be healthy
       uri:
-        url: "http://localhost:{{ app_port }}/actuator/health"
+        url: "http://host.docker.internal:{{ app_port }}/actuator/health"
         method: GET
         status_code: 200
       register: health_check
@@ -35,4 +35,4 @@
 
     - name: Confirm deployment
       debug:
-        msg: "Order Service deployed successfully at http://localhost:{{ app_port }}"
+        msg: "Order Service deployed successfully at http://host.docker.internal:{{ app_port }}"
