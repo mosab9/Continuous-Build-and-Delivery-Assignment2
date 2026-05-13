@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MCP Servers Configuration",
+  "description": "Central configuration for all MCP servers",
+  "type": "object",
+  "properties": {
+    "jenkins": {
+      "type": "object",
+      "description": "Jenkins CI/CD server configuration",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Jenkins server URL",
+          "format": "uri",
+          "examples": ["http://localhost:9001", "https://jenkins.example.com"]
+        },
+        "user": {
+          "type": "string",
+          "description": "Jenkins username"
+        },
+        "token": {
+          "type": "string",
+          "description": "Jenkins API token (generate from User > Configure > API Token)"
+        }
+      },
+      "required": ["url", "user", "token"]
+    },
+    "sonarqube": {
+      "type": "object",
+      "description": "SonarQube code quality server configuration",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "SonarQube server URL",
+          "format": "uri",
+          "examples": ["http://localhost:9000", "https://sonarqube.example.com"]
+        },
+        "token": {
+          "type": "string",
+          "description": "SonarQube API token (generate from My Account > Security > Tokens)"
+        }
+      },
+      "required": ["url", "token"]
+    },
+    "gitlab": {
+      "type": "object",
+      "description": "GitLab server configuration",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "GitLab server URL",
+          "format": "uri",
+          "examples": ["http://localhost:8080", "https://gitlab.example.com"]
+        },
+        "token": {
+          "type": "string",
+          "description": "GitLab personal access token (generate from User Settings > Access Tokens)"
+        }
+      },
+      "required": ["url", "token"]
+    }
+  }
+}

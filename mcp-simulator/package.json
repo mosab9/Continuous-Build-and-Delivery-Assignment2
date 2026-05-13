@@ -1,0 +1,14 @@
+{
+  "name": "mcp-simulator",
+  "version": "1.0.0",
+  "description": "Simulator to test MCP servers for Jenkins and SonarQube",
+  "type": "module",
+  "scripts": {
+    "start": "node src/simulator.js",
+    "test:jenkins": "node src/simulator.js --server jenkins",
+    "test:sonar": "node src/simulator.js --server sonar"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "./config.schema.json",
+  "jenkins": {
+    "url": "http://localhost:9001",
+    "user": "admin",
+    "token": "your-jenkins-api-token"
+  },
+  "sonarqube": {
+    "url": "http://localhost:9000",
+    "token": "sqa_your-sonarqube-token"
+  },
+  "gitlab": {
+    "url": "http://localhost:9003",
+    "token": "glpat-your-gitlab-token"
+  }
+}

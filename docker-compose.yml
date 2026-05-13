@@ -1,6 +1,53 @@
-version: '3.8'
-
 services:
+  # ===========================================
+  # GitLab - Source Code Management
+  # ===========================================
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    container_name: gitlab
+    hostname: gitlab.local
+    ports:
+      - "9003:9003"      # HTTP (GitLab listens on same port as external_url)
+      - "9443:443"       # HTTPS
+      - "2222:22"        # SSH for git operations
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        # External URL - update this to your actual hostname/IP
+        external_url 'http://localhost:9003'
+
+        # GitLab Shell SSH port
+        gitlab_rails['gitlab_shell_ssh_port'] = 2222
+
+        # Disable services not needed to reduce memory usage
+        prometheus_monitoring['enable'] = false
+        node_exporter['enable'] = false
+        redis_exporter['enable'] = false
+        postgres_exporter['enable'] = false
+        gitlab_exporter['enable'] = false
+
+        # PostgreSQL settings (using embedded)
+        postgresql['shared_buffers'] = "256MB"
+
+        # Puma (web server) settings
+        puma['worker_processes'] = 2
+
+        # Sidekiq settings
+        sidekiq['max_concurrency'] = 10
+
+        # GitLab settings for Jenkins integration
+        gitlab_rails['webhook_timeout'] = 30
+    volumes:
+      - gitlab_config:/etc/gitlab
+      - gitlab_logs:/var/log/gitlab
+      - gitlab_data:/var/opt/gitlab
+    shm_size: '256m'
+    restart: unless-stopped
+    networks:
+      - ci-network
+
+  # ===========================================
+  # Jenkins - CI/CD Server
+  # ===========================================
   jenkins:
     image: jenkins/jenkins:lts
     container_name: jenkins
@@ -14,8 +61,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     environment:
       - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
-    restart: unless-stopped    
+    restart: unless-stopped
+    networks:
+      - ci-network
 
+  # ===========================================
+  # SonarQube - Code Quality Analysis
+  # ===========================================
   sonarqube:
     image: sonarqube:community
     container_name: sonarqube
@@ -31,6 +83,8 @@ services:
       - sonarqube_data:/opt/sonarqube/data
       - sonarqube_logs:/opt/sonarqube/logs
     restart: unless-stopped
+    networks:
+      - ci-network
 
   sonar_db:
     image: postgres:15
@@ -42,8 +96,24 @@ services:
     volumes:
       - sonar_db_data:/var/lib/postgresql/data
     restart: unless-stopped
+    networks:
+      - ci-network
 
+# ===========================================
+# Networks
+# ===========================================
+networks:
+  ci-network:
+    driver: bridge
+    name: ci-network
+
+# ===========================================
+# Volumes
+# ===========================================
 volumes:
+  gitlab_config:
+  gitlab_logs:
+  gitlab_data:
   jenkins_home:
   sonarqube_data:
   sonarqube_logs:
