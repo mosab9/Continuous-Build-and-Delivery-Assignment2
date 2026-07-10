@@ -70,7 +70,7 @@ function loadCentralConfig(): { jenkins?: JenkinsConfig } {
  */
 function getConfig(): JenkinsConfig {
   const centralConfig = loadCentralConfig();
-  const jenkinsConfig = centralConfig.jenkins || {};
+  const jenkinsConfig: Partial<JenkinsConfig> = centralConfig.jenkins || {};
 
   return {
     url: process.env.JENKINS_URL || jenkinsConfig.url || "",

@@ -1,0 +1,16 @@
+jenkins:
+  securityRealm:
+    ldap:
+      configurations:
+        - server: "ldap://openldap:389"
+          rootDN: "dc=devops,dc=lab"
+          managerDN: "cn=admin,dc=devops,dc=lab"
+          managerPasswordSecret: "${LDAP_ADMIN_PASSWORD}"
+          userSearchBase: "ou=people"
+          userSearch: "uid={0}"
+          groupSearchBase: "ou=groups"
+          displayNameAttributeName: "cn"
+          mailAddressAttributeName: "mail"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false

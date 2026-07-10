@@ -1,0 +1,61 @@
+dn: ou=people,dc=devops,dc=lab
+objectClass: organizationalUnit
+ou: people
+
+dn: ou=groups,dc=devops,dc=lab
+objectClass: organizationalUnit
+ou: groups
+
+dn: uid=jdoe,ou=people,dc=devops,dc=lab
+objectClass: inetOrgPerson
+uid: jdoe
+cn: Jane Doe
+sn: Doe
+givenName: Jane
+mail: jdoe@devops.lab
+userPassword: DomainUser123!
+
+dn: uid=asmith,ou=people,dc=devops,dc=lab
+objectClass: inetOrgPerson
+uid: asmith
+cn: Alice Smith
+sn: Smith
+givenName: Alice
+mail: asmith@devops.lab
+userPassword: DomainUser123!
+
+dn: uid=bwayne,ou=people,dc=devops,dc=lab
+objectClass: inetOrgPerson
+uid: bwayne
+cn: Bruce Wayne
+sn: Wayne
+givenName: Bruce
+mail: bwayne@devops.lab
+userPassword: DomainUser123!
+
+dn: uid=ckent,ou=people,dc=devops,dc=lab
+objectClass: inetOrgPerson
+uid: ckent
+cn: Clark Kent
+sn: Kent
+givenName: Clark
+mail: ckent@devops.lab
+userPassword: DomainUser123!
+
+dn: uid=musaba,ou=people,dc=devops,dc=lab
+objectClass: inetOrgPerson
+uid: musaba
+cn: Musab Abd
+sn: Abd
+givenName: Musab
+mail: musaba@devops.lab
+userPassword: password
+
+dn: cn=developers,ou=groups,dc=devops,dc=lab
+objectClass: groupOfNames
+cn: developers
+member: uid=jdoe,ou=people,dc=devops,dc=lab
+member: uid=asmith,ou=people,dc=devops,dc=lab
+member: uid=bwayne,ou=people,dc=devops,dc=lab
+member: uid=ckent,ou=people,dc=devops,dc=lab
+member: uid=musaba,ou=people,dc=devops,dc=lab

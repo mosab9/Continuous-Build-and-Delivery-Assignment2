@@ -139,7 +139,7 @@ export class ConfigLoader {
    * Environment variables override config file values
    */
   getJenkinsConfig(): JenkinsConfig {
-    const fileConfig = this.config.jenkins || {};
+    const fileConfig: Partial<JenkinsConfig> = this.config.jenkins || {};
 
     return {
       url: process.env.JENKINS_URL || fileConfig.url || "",
@@ -153,7 +153,7 @@ export class ConfigLoader {
    * Environment variables override config file values
    */
   getSonarQubeConfig(): SonarQubeConfig {
-    const fileConfig = this.config.sonarqube || {};
+    const fileConfig: Partial<SonarQubeConfig> = this.config.sonarqube || {};
 
     return {
       url: process.env.SONAR_URL || fileConfig.url || "",
@@ -166,7 +166,7 @@ export class ConfigLoader {
    * Environment variables override config file values
    */
   getGitLabConfig(): GitLabConfig {
-    const fileConfig = this.config.gitlab || {};
+    const fileConfig: Partial<GitLabConfig> = this.config.gitlab || {};
 
     return {
       url: process.env.GITLAB_URL || fileConfig.url || "",
